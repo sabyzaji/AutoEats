@@ -4,9 +4,15 @@ import { SiCoffeescript } from "react-icons/si";
 import Button from "../layouts/Button";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
+import { IoPersonCircleSharp } from "react-icons/io5";
+import { FaShoppingCart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleChange = () => {
     setMenu(!menu);
@@ -20,7 +26,8 @@ const Navbar = () => {
     <div className="fixed w-full z-10 bg-custom-nav">
       <div>
         <div className=" flex flex-row justify-between p-5 lg:px-32 px-5  shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-          <div className=" flex flex-row items-center cursor-pointer gap-2">
+          <div className=" flex flex-row items-center cursor-pointer gap-2" onClick={() => { navigate("/home") }}>
+
             <span style={{ color: 'white' }}>
               <SiCoffeescript size={25} />
             </span>
@@ -28,38 +35,39 @@ const Navbar = () => {
           </div>
 
           <nav className="hidden md:flex flex-row items-center  text-lg font-medium text-white font-sans gap-8">
-            <Link
-              to="home"
-              spy={true}
-              smooth={true}
-              duration={500}
-              className="group relative inline-block cursor-pointer hover:text-slate-300"
-            >
-              Home
+            <div className="flex justify-around  gap-5">
+              <Link
+                to="home"
+                spy={true}
+                smooth={true}
+                duration={500}
+                className="group relative inline-block cursor-pointer hover:text-slate-300"
+              >
+                Home
 
-            </Link>
+              </Link>
 
-            <Link
-              to="menu"
-              spy={true}
-              smooth={true}
-              duration={500}
-              className="group relative inline-block cursor-pointer hover:text-slate-300"
-            >
-              Menu
-            </Link>
+              <Link
+                to="menu"
+                spy={true}
+                smooth={true}
+                duration={500}
+                className="group relative inline-block cursor-pointer hover:text-slate-300"
+              >
+                Menu
+              </Link>
 
-            <Link
-              to="about"
-              spy={true}
-              smooth={true}
-              duration={500}
-              className="group relative inline-block cursor-pointer hover:text-slate-300"
-            >
-              About Us
-            </Link>
+              <Link
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                className="group relative inline-block cursor-pointer hover:text-slate-300"
+              >
+                About Us
+              </Link>
 
-            {/* <Link
+              {/* <Link
               to="products"
               spy={true}
               smooth={true}
@@ -70,15 +78,23 @@ const Navbar = () => {
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-black transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
             </Link> */}
 
-            <Link
-              to="review"
-              spy={true}
-              smooth={true}
-              duration={500}
-              className="group relative inline-block cursor-pointer hover:text-slate-300"
-            >
-              Reviews
-            </Link>
+              <Link
+                to="review"
+                spy={true}
+                smooth={true}
+                duration={500}
+                className="group relative inline-block cursor-pointer hover:text-slate-300"
+              >
+                Reviews
+              </Link></div>
+            <div className="flex justify-around  gap-4">
+              <div onClick={() => navigate('/profile')}>
+                <IoPersonCircleSharp cursor={"pointer"} size={25} />
+              </div>
+              <div onClick={() => navigate('/cart')}>
+                <FaShoppingCart size={25} cursor={"pointer"} />
+              </div>
+            </div>
           </nav>
 
           {/* <div className=" hidden lg:flex">
@@ -147,11 +163,11 @@ const Navbar = () => {
           >
             Reviews
           </Link>
-
           <Button title="login" />
         </div>
-      </div>
-    </div>
+
+      </div >
+    </div >
   );
 };
 

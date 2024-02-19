@@ -14,7 +14,6 @@ const FoodMenu = () => {
           <p>Rating: {food.rating}</p>
         </div>
       ))}
-
     </div>
   );
 };

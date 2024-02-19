@@ -3,7 +3,7 @@ import { FaShoppingCart } from "react-icons/fa";
 
 const ListedMenuCard = (props) => {
     return (
-        <div className=" border-red-600 border">
+        <div className=" border-red-600 border  py-3">
             <div className=" h-3/4 w-full">
                 <img className=" " src={props.img} alt={props.imgName} />
             </div>
@@ -23,8 +23,6 @@ const ListedMenuCard = (props) => {
             </div>
 
         </div>
-
-
     )
 };
 
