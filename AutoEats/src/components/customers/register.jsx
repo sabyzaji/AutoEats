@@ -16,12 +16,12 @@ const Register = () => {
             const requestData = JSON.stringify({
                 name: name,
                 phoneNumber: phoneNum,
-                // mailId: email,
-                // password: password,
+                email: email,
+                password: password,
             });
 
             const response = await axios.post(
-                `http://192.168.1.7:3500/api/sign-up`,
+                `http://localhost:3500/api/sign-up`,
                 requestData,
                 {
                     headers: {
@@ -35,7 +35,7 @@ const Register = () => {
 
             if (response.status === 200) {
                 setRegistrationStatus(CONSTANTS.STATUS_CONSTANTS.COMPLETED);
-                navigate(CONSTANTS.PATH_CONSTANTS.LOGIN);
+                navigate('/');
             } else {
                 throw new Error("Server returned non-200 status code");
             }
@@ -87,53 +87,50 @@ const Register = () => {
 
 
     return (
-        <div>
-            <div className="flex flex-col items-center justify-center h-screen">
-                <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Sign Up</h2>
-                    <form className="flex flex-col">
-                        <input
-                            placeholder="Full Name"
-                            type="text"
-                            name='name'
-                            onChange={(e) => setName(e.target.value)}
-
-                        />
-
-                        <input
-                            placeholder="Phone Number"
-                            type="tel"
-                            name='number'
-                            onChange={(e) => setPhoneNum(e.target.value)}
-                        />
-
-                        {/* <input
-                            placeholder="Email"
-                            type="email"
-                            name='email'
-                            onChange={(e) => setEmail(e.target.value)}
-                        /> */}
-
-                        {/* <input
-                            placeholder="Password"
-                            type="password"
-                            name='password'
-                            onChange={(e) => setPassword(e.target.value)} />
-
-
-                        <input
-                            placeholder="Confirm Password"
-                            type="password" /> */}
-
-
-                        <button
-                            className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
-                            onClick={handleSignIn}>
-                            Sign Up
-                        </button>
-
-                    </form>
-                </div>
+        <div className="flex justify-center items-center h-screen">
+            <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Sign Up</h2>
+                <form className="flex flex-col">
+                    <input
+                        className="px-3 py-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:border-indigo-500"
+                        placeholder="Full Name"
+                        type="text"
+                        name='name'
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <input
+                        className="px-3 py-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:border-indigo-500"
+                        placeholder="Phone Number"
+                        type="tel"
+                        name='number'
+                        onChange={(e) => setPhoneNum(e.target.value)}
+                    />
+                    <input
+                        className="px-3 py-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:border-indigo-500"
+                        placeholder="Email"
+                        type="email"
+                        name='email'
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        className="px-3 py-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:border-indigo-500"
+                        placeholder="Password"
+                        type="password"
+                        name='password'
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <input
+                        className="px-3 py-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:border-indigo-500"
+                        placeholder="Confirm Password"
+                        type="password"
+                    />
+                    <button
+                        className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
+                        onClick={handleSignIn}
+                    >
+                        Sign Up
+                    </button>
+                </form>
             </div>
         </div>
     );

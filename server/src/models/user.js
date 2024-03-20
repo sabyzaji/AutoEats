@@ -11,48 +11,31 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        email: {
-            type: String,
-            required: false
-        },
         password: {
             type: String,
             required: true
-        },
-        username: {
+        }, email: {
             type: String,
             required: true
         },
+        // email: String,
+        // password: String,
+        username: String,
         phoneNumber: {
             type: String,
             required: true
         },
-        address: {
-            type: String,
-            required: false
-        },
-        registrationDate: {
-            type: Date, // Changed to Date type
-            required: false
-        },
-        gender: {
-            type: String,
-            required: false
-        },
-        dob: {
-            type: Date, // Changed to Date type
-            required: false
-        },
-        role: {
-            type: String,
-            required: false
-        }
+        address: String,
+        registrationDate: Date,
+        gender: String,
+        dob: Date,
+        role: String
     },
     {
         timestamps: true
     }
 );
 
-const UserModel = mongoose.model("user", userSchema);
+const UserModel = mongoose.model("User", userSchema);
 
 module.exports = { UserModel };

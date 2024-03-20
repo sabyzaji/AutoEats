@@ -7,21 +7,16 @@ const LogIn = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        if (username === "user@gmail.com" && password === "user123") {
-            navigate("/home");
-        } else if (username === "staff@gmail.com" && password === "staff123") {
+        if (username === "staff@gmail.com" && password === "staff123") {
             navigate("/staff");
         } else if (username === "admin@gmail.com" && password === "admin123") {
             navigate("/home");
         } else {
             alert("Invalid credentials");
         }
-
-
     }
 
     return (
