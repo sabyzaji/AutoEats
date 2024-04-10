@@ -6,13 +6,16 @@ import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { AiOutlineLogout } from "react-icons/ai";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const userId = location.state.userId;
+  const menuArray = location.state.menuArray;
 
   const handleChange = () => {
     setMenu(!menu);
@@ -23,10 +26,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed w-full z-10 bg-custom-nav">
+    <div className=" w-full z-10 bg-custom-nav">
       <div>
         <div className=" flex flex-row justify-between p-5 lg:px-32 px-5  shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-          <div className=" flex flex-row items-center cursor-pointer gap-2" onClick={() => { navigate("/home") }}>
+          <div className=" flex flex-row items-center cursor-pointer gap-2" onClick={() => { navigate("/home", { state: { userId, menuArray } }) }}>
 
             <span style={{ color: 'white' }}>
               <SiCoffeescript size={25} />
@@ -36,6 +39,7 @@ const Navbar = () => {
 
           <nav className="hidden md:flex flex-row items-center  text-lg font-medium text-white font-sans gap-8">
             <div className="flex justify-around  gap-5">
+
               <Link
                 to="home"
                 spy={true}
@@ -47,7 +51,7 @@ const Navbar = () => {
 
               </Link>
 
-              <Link
+              {/* <Link
                 to="menu"
                 spy={true}
                 smooth={true}
@@ -55,7 +59,8 @@ const Navbar = () => {
                 className="group relative inline-block cursor-pointer hover:text-slate-300"
               >
                 Menu
-              </Link>
+              </Link> */}
+
 
               <Link
                 to="about"
@@ -86,13 +91,25 @@ const Navbar = () => {
                 className="group relative inline-block cursor-pointer hover:text-slate-300"
               >
                 Reviews
-              </Link></div>
+              </Link>
+              <div
+                onClick={() => navigate("/menuList", { state: { userId, menuArray } })}
+                className="group relative inline-block cursor-pointer hover:text-slate-300"
+              >
+                OrderNow
+              </div>
+            </div>
             <div className="flex justify-around  gap-4">
               <div onClick={() => navigate('/profile')}>
                 <IoPersonCircleSharp cursor={"pointer"} size={25} />
               </div>
-              <div onClick={() => navigate('/cart')}>
+              <div onClick={() => navigate('/cart', { state: { userId, menuArray } })}>
                 <FaShoppingCart size={25} cursor={"pointer"} />
+              </div>
+              <div onClick={() => navigate("/")}>
+                {/* <span title="Logout"> */}
+                <AiOutlineLogout size={25} title="Logout" cursor={"pointer"} />
+                {/* </span>    */}
               </div>
             </div>
           </nav>
@@ -123,7 +140,7 @@ const Navbar = () => {
           >
             Home
           </Link>
-          <Link
+          {/* <Link
             to="menu"
             spy={true}
             smooth={true}
@@ -132,7 +149,7 @@ const Navbar = () => {
             onClick={closeMenu}
           >
             Menu
-          </Link>
+          </Link> */}
           <Link
             to="about"
             spy={true}

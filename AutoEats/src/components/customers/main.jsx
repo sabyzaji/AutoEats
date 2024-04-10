@@ -6,10 +6,13 @@ import Product from "./Product";
 import Review from "./Review";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { useLocation } from "react-router-dom";
 
-
-const MainScr = () => {
+const MainScr = (props) => {
+    const location = useLocation();
+    // console.log(location)
     return (
+
         <div>
             <Navbar />
 
@@ -18,9 +21,9 @@ const MainScr = () => {
                     <Home />
                 </div>
 
-                <div id="menu">
+                {/* <div id="menu">
                     <Menu />
-                </div>
+                </div> */}
 
                 <div id="about">
                     <About />

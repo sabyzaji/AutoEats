@@ -2,23 +2,54 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaFacebook, FaSquareXTwitter } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa";
+import axios from 'axios';
+
 
 const LogIn = () => {
-    const [username, setUsername] = useState("");
+    const [phoneNumber, setphoneNumber] = useState("");
     const [password, setPassword] = useState("");
+    // const history = useHistory();
 
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        if (username === "staff@gmail.com" && password === "staff123") {
-            navigate("/staff");
-        } else if (username === "admin@gmail.com" && password === "admin123") {
-            navigate("/home");
+    const handleLogin = async () => {
+        event.preventDefault();
+        if (phoneNumber == "staff" && password == "staff123") {
+            navigate("/reqstaff")
+        } else if (phoneNumber == "admin" && password == "admin123") {
+            navigate("/menu-management");
         } else {
-            alert("Invalid credentials");
-        }
-    }
+            try {
+                const requestData = JSON.stringify({
+                    phoneNumber: phoneNumber,
+                    password: password,
+                });
+                const response = await axios.post(
+                    `http://localhost:3500/api/login`,
+                    requestData,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        withCredentials: true,
+                    }
+                );
+                if (response.status === 200) {
+                    const responseData = response.data;
+                    const userId = responseData.loggedUserId
+                    console.log(userId)
+                    let menuArray = []
 
+                    navigate("/home", { state: { userId, menuArray } })
+
+                } else {
+                    throw new Error(CONSTANTS.RESPONSE_STATUS.FAILED);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    };
     return (
         <div className="flex justify-center h-screen overflow-hidden bg-custom-bg">
             <div className="w-full h-4/6 p-6 m-auto bg-custom-bg rounded-md shadow-xl shadow-rose-600/40 ring-2  lg:max-w-xl">
@@ -27,13 +58,13 @@ const LogIn = () => {
                 </h1>
                 <form className="mt-6">
                     <div className="mb-2">
-                        <label htmlFor="email" className="block text-sm font-semibold text-gray-800" >
-                            Username
+                        <label htmlFor="text" className="block text-sm font-semibold text-gray-800" >
+                            Phone Number
                         </label>
                         <input
-                            type="email"
+                            type="text"
                             className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                            onChange={(e) => setUsername(e.target.value)}
+                            onChange={(e) => setphoneNumber(e.target.value)}
                         />
                     </div>
                     <div className="mb-2">
@@ -75,5 +106,6 @@ const LogIn = () => {
         </div>
     );
 };
+
 
 export default LogIn;

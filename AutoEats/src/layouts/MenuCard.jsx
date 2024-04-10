@@ -1,8 +1,10 @@
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import Drawer from "./AdminLayout";
 
 const MenuCard = (props) => {
-  return (
+  return (<>
+
     <div className=" w-full lg:w-1/4  p-3 rounded-lg bg-custom-bg">
       <div>
         <img className=" rounded-xl" src={props.img} alt="img1" />
@@ -30,6 +32,7 @@ const MenuCard = (props) => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 

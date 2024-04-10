@@ -3,23 +3,22 @@ import OrderCard from './components/OrderCard';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const StaffMain = () => {
-    const [reqOrderList, setReqOrderList] = useState([]);
+const AcceptedOrder = () => {
+    const [acceptedOrdersWithItems, setAcceptedOrdersWithItems] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchFoodData = async () => {
+        const fetchAcceptedOrdersWithItems = async () => {
             try {
-                const response = await axios.post('http://localhost:3500/staff/display');
-                const reqOrderListData = response.data;
-                setReqOrderList(reqOrderListData);
-                console.log(reqOrderListData);
+                const response = await axios.post('http://localhost:3500/staff/acpOrders');
+                const acceptedOrdersWithItems = response.data;
+                setAcceptedOrdersWithItems(acceptedOrdersWithItems);
             } catch (error) {
-                console.error('Error fetching food data:', error);
+                console.error('Error fetching accepted orders with items:', error);
             }
         };
 
-        fetchFoodData();
+        fetchAcceptedOrdersWithItems();
     }, []);
 
     const handleNavigation = (path) => {
@@ -42,7 +41,7 @@ const StaffMain = () => {
                     Logout
                 </div>
             </div>
-            <div className='font-bold text-3xl pl-14 pt-8'>Requested Orders</div>
+            <div className='font-bold text-3xl pl-14 pt-8'>Accepted Orders</div>
             <div className='m-2 md:m-10 mt-10 p-2 md:p-10 bg-white rounded-3xl'>
                 <div className='ml-14 grid grid-cols-8 font-extrabold'>
                     <div>Image</div>
@@ -55,8 +54,8 @@ const StaffMain = () => {
                     <div>Action</div>
                 </div>
                 <div className='flex flex-wrap'>
-                    {reqOrderList.map((order, index) => (
-                        <OrderCard key={index} order={order} btn={'Accept'} />
+                    {acceptedOrdersWithItems.map((order, index) => (
+                        <OrderCard key={index} order={order} btn={'Delivered'} />
                     ))}
                 </div>
             </div>
@@ -64,4 +63,4 @@ const StaffMain = () => {
     );
 };
 
-export default StaffMain;
+export default AcceptedOrder;
