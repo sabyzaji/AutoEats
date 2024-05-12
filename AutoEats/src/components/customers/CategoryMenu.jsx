@@ -10,7 +10,7 @@ const FoodMenu = () => {
           <img src={food.img} alt={food.name} />
           <h2>{food.name}</h2>
           <p>{food.desc}</p>
-          <p>Price: ${food.price}</p>
+          <p>Price: ₹{food.price}</p>
           <p>Rating: {food.rating}</p>
         </div>
       ))}

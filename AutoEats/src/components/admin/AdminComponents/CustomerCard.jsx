@@ -9,6 +9,7 @@ const CustomerCard = ({ customer, onClick }) => {
     day: 'numeric',
     month: 'short',
     year: 'numeric'
+
   });
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const CustomerCard = ({ customer, onClick }) => {
   }, [customer._id]); // Call the effect whenever customer._id changes
 
   return (
-    <div className="grid grid-cols-6 ml-14 items-center p-4 border-b border-gray-400 mx-5 cursor-pointer " onClick={() => onClick(customer._id)}>
+    <div className="grid grid-cols-5 ml-14 items-center p-4 border-y-4 mt-3 border-x-2 border-red-300 mx-5 cursor-pointer " onClick={() => onClick(customer._id)}>
       <div >{customer.name}</div>
       <div>{customer.email}</div>
       <div>{customer.phoneNumber}</div>

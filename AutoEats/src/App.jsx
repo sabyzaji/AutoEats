@@ -33,17 +33,11 @@ const App = () => {
         <Route path="/register" element={<Register />} />
 
 
-
-
         {/* Staff */}
-
         <Route path="/reqStaff" element={<StaffMain />} />
         <Route path='/delStaff' element={<DeliveredOrder />} />
         <Route path='/profileStaff' element={<StaffProfile />} />
         <Route path='/acpStaff' element={<AcceptedOrder />} />
-
-
-
 
 
         {/* Admin */}
@@ -54,7 +48,6 @@ const App = () => {
         <Route path="/report" element={<Report />} />
         <Route path="/createmenu" element={<CreateMenu />} />
         <Route path='/customer-profile/' element={<CustmerProfile />} />
-
 
 
       </Routes>

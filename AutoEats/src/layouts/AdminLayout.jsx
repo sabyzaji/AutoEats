@@ -35,7 +35,7 @@ const Drawer = () => {
         const routes = {
             'Menu items': '/menu-management',
             'Customer Details': '/customers',
-            'Employee Details': '/staff',
+            // 'Employee Details': '/staff',
             'Reports': '/report',
             'Orders': '/orders-list',
         };
@@ -53,7 +53,7 @@ const Drawer = () => {
             onKeyDown={toggleDrawer(false)}
         >
             <List>
-                {['Menu items', 'Customer Details', 'Employee Details', 'Reports', 'Orders'].map((text, index) => (
+                {['Menu items', 'Customer Details', , 'Reports', 'Orders'].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton onClick={() => handleListItemClick(text)}>
                             <ListItemIcon>

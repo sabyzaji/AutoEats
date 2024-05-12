@@ -31,7 +31,7 @@ const ListedMenuCard = (props) => {
             <div className="mx-3">
                 <div className="flex  justify-between ">
                     <div className="font-semibold">{props.name}</div>
-                    <div className=" font-bold text-right">${props.price}</div>
+                    <div className=" font-bold text-right">₹{props.price}</div>
                 </div>
                 <div>{props.category}</div>
                 <div>{props.rating}</div>

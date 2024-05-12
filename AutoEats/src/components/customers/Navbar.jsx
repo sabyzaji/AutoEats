@@ -83,7 +83,7 @@ const Navbar = () => {
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-black transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
             </Link> */}
 
-              <Link
+              {/* <Link
                 to="review"
                 spy={true}
                 smooth={true}
@@ -91,7 +91,7 @@ const Navbar = () => {
                 className="group relative inline-block cursor-pointer hover:text-slate-300"
               >
                 Reviews
-              </Link>
+              </Link> */}
               <div
                 onClick={() => navigate("/menuList", { state: { userId, menuArray } })}
                 className="group relative inline-block cursor-pointer hover:text-slate-300"
@@ -100,7 +100,7 @@ const Navbar = () => {
               </div>
             </div>
             <div className="flex justify-around  gap-4">
-              <div onClick={() => navigate('/profile')}>
+              <div onClick={() => navigate('/profile', { state: { userId, menuArray } })}>
                 <IoPersonCircleSharp cursor={"pointer"} size={25} />
               </div>
               <div onClick={() => navigate('/cart', { state: { userId, menuArray } })}>
@@ -127,7 +127,7 @@ const Navbar = () => {
           </div>
         </div>
         <div
-          className={` ${menu ? "translate-x-0" : "-translate-x-full"
+          className={` ₹{menu ? "translate-x-0" : "-translate-x-full"
             } lg:hidden flex flex-col absolute bg-black text-white left-0 top-16 font-semibold text-2xl text-center pt-8 pb-4 gap-8 w-full h-fit transition-transform duration-300`}
         >
           <Link

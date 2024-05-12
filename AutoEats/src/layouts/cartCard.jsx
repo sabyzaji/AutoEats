@@ -19,7 +19,7 @@ const CartCard = ({ img, name, price, quantity, updateQuantity }) => {
                     <img className="h-16 w-16 mr-4" src={img} alt="Product image" />
                     <span className="font-semibold m-auto ml-0">{name}</span>
                 </div>
-                <div className='m-auto'> ${price.toFixed(2)} </div>
+                <div className='m-auto'> ₹{price.toFixed(2)} </div>
                 <div>
                     <div className="flex justify-center mt-4 ">
                         <button className="border rounded-md bg-slate-100 px-2" onClick={handleDecrease}>-</button>
@@ -27,7 +27,7 @@ const CartCard = ({ img, name, price, quantity, updateQuantity }) => {
                         <button className="border rounded-md bg-slate-100 px-2" onClick={handleIncrease}>+</button>
                     </div>
                 </div>
-                <div className='m-auto'>${(price * quantity).toFixed(2)}</div>
+                <div className='m-auto'>₹{(price * quantity).toFixed(2)}</div>
             </div>
         </div>
     );

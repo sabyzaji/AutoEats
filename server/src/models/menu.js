@@ -28,7 +28,7 @@ const menuSchema = mongoose.Schema(
         },
         quantity_left: {
             type: Number,
-            required: true
+            required: false
         },
         ingredients: {
             type: String

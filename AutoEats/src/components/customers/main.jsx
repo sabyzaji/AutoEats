@@ -33,9 +33,9 @@ const MainScr = (props) => {
                     <Product />
                 </div> */}
 
-                <div id="review">
+                {/* <div id="review">
                     <Review />
-                </div>
+                </div> */}
             </main>
 
             <Footer />

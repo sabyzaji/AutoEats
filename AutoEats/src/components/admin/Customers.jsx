@@ -5,7 +5,6 @@ import CustomerCard from './AdminComponents/CustomerCard';
 import { useNavigate } from "react-router-dom";
 
 
-
 const Customers = () => {
     const navigate = useNavigate()
     const [customerArray, setCustomerArray] = useState([]);
@@ -43,8 +42,8 @@ const Customers = () => {
                     Customers Details
                 </div>
             </div>
-            <div className='m-2 md:m-10 mt-10 p-2 md:p-10 bg-white rounded-3xl'>
-                <div className='ml-14 grid grid-cols-6 font-extrabold'>
+            <div className='m-2 md:m-10 mt-10 p-2 md:p-10  '>
+                <div className='ml-14 grid grid-cols-5 font-extrabold '>
                     <div>Customer Name</div>
                     <div>Email Id</div>
                     <div>Contact Number</div>

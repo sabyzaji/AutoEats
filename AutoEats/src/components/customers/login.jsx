@@ -4,19 +4,22 @@ import { FaFacebook, FaSquareXTwitter } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa";
 import axios from 'axios';
 
-
 const LogIn = () => {
-    const [phoneNumber, setphoneNumber] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
-    // const history = useHistory();
-
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleLogin = async (event) => {
         event.preventDefault();
-        if (phoneNumber == "staff" && password == "staff123") {
-            navigate("/reqstaff")
-        } else if (phoneNumber == "admin" && password == "admin123") {
+        if (!phoneNumber || !password) {
+            setError("Phone number and password are required");
+            return;
+        }
+
+        if (phoneNumber === "staff" && password === "staff123") {
+            navigate("/reqstaff");
+        } else if (phoneNumber === "admin" && password === "admin123") {
             navigate("/menu-management");
         } else {
             try {
@@ -24,6 +27,7 @@ const LogIn = () => {
                     phoneNumber: phoneNumber,
                     password: password,
                 });
+
                 const response = await axios.post(
                     `http://localhost:3500/api/login`,
                     requestData,
@@ -34,22 +38,23 @@ const LogIn = () => {
                         withCredentials: true,
                     }
                 );
+
                 if (response.status === 200) {
                     const responseData = response.data;
-                    const userId = responseData.loggedUserId
-                    console.log(userId)
-                    let menuArray = []
+                    const userId = responseData.loggedUserId;
+                    let menuArray = [];
 
-                    navigate("/home", { state: { userId, menuArray } })
-
+                    navigate("/home", { state: { userId, menuArray } });
                 } else {
-                    throw new Error(CONSTANTS.RESPONSE_STATUS.FAILED);
+                    throw new Error("Failed to login");
                 }
             } catch (error) {
-                console.log(error)
+                console.log(error);
+                setError("Failed to login");
             }
         }
     };
+
     return (
         <div className="flex justify-center h-screen overflow-hidden bg-custom-bg">
             <div className="w-full h-4/6 p-6 m-auto bg-custom-bg rounded-md shadow-xl shadow-rose-600/40 ring-2  lg:max-w-xl">
@@ -63,8 +68,10 @@ const LogIn = () => {
                         </label>
                         <input
                             type="text"
+                            required
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
                             className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                            onChange={(e) => setphoneNumber(e.target.value)}
                         />
                     </div>
                     <div className="mb-2">
@@ -73,13 +80,13 @@ const LogIn = () => {
                         </label>
                         <input
                             type="password"
+                            required
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                     </div>
-                    <a href="#" className="text-xs text-purple-600 hover:underline">
-                        Forget Password?
-                    </a>
+                    {error && <p className="text-red-500 mt-2">{error}</p>}
                     <div className="mt-6">
                         <button
                             onClick={handleLogin}
@@ -92,7 +99,6 @@ const LogIn = () => {
                     <div className='flex   justify-center gap-4 m-auto'>
                         <FaSquareXTwitter size={"24px"} onClick={() => { navigate('/') }} cursor={"pointer"} />
                         <FaFacebook size={"24px"} onClick={() => { navigate('#') }} cursor={"pointer"} />
-
                         <FaGoogle size={"24px"} onClick={() => { navigate('#') }} cursor={"pointer"} />
                     </div>
                 </form>
@@ -106,6 +112,5 @@ const LogIn = () => {
         </div>
     );
 };
-
 
 export default LogIn;

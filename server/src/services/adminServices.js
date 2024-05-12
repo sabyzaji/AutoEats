@@ -91,11 +91,101 @@ async function CustomerDetailsIdPassed(customerId) {
     }
 }
 
+//get order details 
+
+const getOrdersList = async () => {
+    try {
+
+        // Fetch orders with orderStatus "paid"
+        const orders = await OrderModel.find();
+        console.log(orders);
+        // Initialize an array to store orders with items
+        const ordersWithItems = [];
+
+        // Iterate through each order
+        for (const order of orders) {
+            // Fetch corresponding order items using orderID
+            const orderItems = await OrderItemModel.find({ orderID: order._id });
+
+            // Add the order and its items to the array
+            ordersWithItems.push({
+                order,
+                orderItems
+            });
+        }
+
+        return ordersWithItems;
+    } catch (error) {
+        throw new Error(`Error retrieving orders with items: ${error.message}`);
+    }
+}
+
+//find the number of times the table booked
+
+const countTablesUsedFrequently = async () => {
+    const seatNumbers = [
+        "1A", "1B", "1C", "1D", "1E", "1F",
+        "2A", "2B", "2C", "2D", "2E", "2F",
+        "3A", "3B", "3C", "3D", "3E", "3F"
+    ];
+
+    const tableCounts = {};
+
+    try {
+        // Loop through each seat number
+        for (const seatNumber of seatNumbers) {
+            // Count the number of orders for the current seat number
+            const ordersCount = await OrderModel.countDocuments({ deliveryAddress: seatNumber });
+
+            // Store the count in the tableCounts object
+            tableCounts[seatNumber] = ordersCount;
+        }
+
+        // Return the tableCounts object containing the counts for each table
+        return tableCounts;
+    } catch (error) {
+        // Handle any errors that occur during the process
+        console.error("Error counting tables used frequently:", error);
+        throw new Error("Failed to count tables used frequently");
+    }
+};
+
+//fetch the daily order and revenue
+
+
+const getDailyOrdersAndRevenue = async () => {
+    const startDate = new Date('2024-04-01');
+    const endDate = new Date(); // Today's date
+
+    const pipeline = [
+        {
+        $match: {
+    createdAt: { $gte: startDate, $lte: endDate }
+}
+        },
+{
+            $group: {
+        _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+        totalOrders: { $sum: 1 },
+        totalRevenue: { $sum: '$totalAmount' }
+    }
+},
+{
+            $sort: { '_id': 1 } // Sort by date in ascending order
+}
+    ];
+
+return await OrderModel.aggregate(pipeline);
+};
+
 
 module.exports = {
     newItem,
     fetchAllCustomers,
     fetchOrdersId,
     AvailabilityChange,
-    CustomerDetailsIdPassed
+    CustomerDetailsIdPassed,
+    getOrdersList,
+    countTablesUsedFrequently,
+    getDailyOrdersAndRevenue
 }

@@ -89,6 +89,7 @@ const Cart = () => {
                 console.log("request successfully ");
                 setMenuArray([]); // Clear the menuArray state
                 setSelectedSeat(""); // Reset the selected seat
+                window.alert("Your order has been placed successfully!");
                 navigate("/home", { state: { userId, menuArray: [] } });
             } else {
                 throw new Error("error");
@@ -130,16 +131,16 @@ const Cart = () => {
                                 <h2 className="text-lg font-semibold mb-4">Summary</h2>
                                 <div className="flex justify-between mb-2">
                                     <span>Subtotal</span>
-                                    <span>${subtotal.toFixed(2)}</span>
+                                    <span>  ₹{subtotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between mb-2">
                                     <span>Taxes (5%)</span>
-                                    <span>${(subtotal * 0.05).toFixed(2)}</span>
+                                    <span> ₹{(subtotal * 0.05).toFixed(2)}</span>
                                 </div>
                                 <hr className="my-2" />
                                 <div className="flex justify-between mb-2">
                                     <span className="font-semibold">Total</span>
-                                    <span className="font-semibold">${(subtotal * 1.05).toFixed(2)}</span>
+                                    <span className="font-semibold"> ₹{(subtotal * 1.05).toFixed(2)}</span>
                                 </div>
                                 <div className='flex justify-between'>
                                     <div>Seat Number</div>

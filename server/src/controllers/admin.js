@@ -10,7 +10,7 @@ async function createItem(req, res, next) {
             availability: req.body.availability,
             category: req.body.category,
             price: req.body.price,
-            quantity_left: req.body.quantity_left,
+            // quantity_left: req.body.quantity_left,
             ingredients: req.body.ingredients,
             imageURL: req.body.imageURL,
             preparationTime: req.body.preparationTime
@@ -80,10 +80,47 @@ async function fetchCustomersById(req, res) {
     }
 }
 
+const getOrdersListToDisplay = async (req, res) => {
+    try {
+        // Call the service function to get orders with items
+        const ordersWithItems = await adminServices.getOrdersList();
+        console.log(ordersWithItems)
+        // Send the response
+        res.json(ordersWithItems);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error retrieving orders with items' });
+    }
+}
+
+const countTablesUsedFrequently = async (req, res) => {
+    try {
+        console.log("hello")
+
+        const tableCounts = await adminServices.countTablesUsedFrequently();
+        res.status(200).json(tableCounts);
+    } catch (error) {
+        console.error("Error counting tables used frequently:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+const getDailyOrdersAndRevenue = async (req, res) => {
+    try {
+        const dailyOrdersAndRevenue = await adminServices.getDailyOrdersAndRevenue();
+        res.status(200).json(dailyOrdersAndRevenue);
+    } catch (error) {
+        console.error('Error fetching daily orders and revenue:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
 module.exports = {
     createItem,
     fetchCustomers,
     fetchOrdersWithId,
     changeAvailability,
     fetchCustomersById,
+    getOrdersListToDisplay,
+    countTablesUsedFrequently,
+    getDailyOrdersAndRevenue
 }
