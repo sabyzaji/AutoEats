@@ -1,3 +1,4 @@
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
@@ -26,7 +27,8 @@ const ListedMenuCard = (props) => {
     return (
         <div className=" border-red-600 border  py-20 w-auto h-auto ">
             <div className=" h-3/4 w-full">
-                <img className=" " src={props.img} alt={props.imgName} />
+                <img className=" h-4/5 w-full " src={props.img} alt={props.imgName} />
+                {console.log(props.img)}
             </div>
             <div className="mx-3">
                 <div className="flex  justify-between ">

@@ -114,6 +114,17 @@ const getDailyOrdersAndRevenue = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+const staffOrderList = async (req, res) => {
+    try {
+        const staffAndOrderNum = await adminServices.staffOrderList();
+        res.status(200).json(staffAndOrderNum);
+    } catch (error) {
+        console.error("Error to display", error.message);
+        res.status(500).json({ error: "internal server error" });
+    }
+}
+
 module.exports = {
     createItem,
     fetchCustomers,
@@ -122,5 +133,6 @@ module.exports = {
     fetchCustomersById,
     getOrdersListToDisplay,
     countTablesUsedFrequently,
-    getDailyOrdersAndRevenue
+    getDailyOrdersAndRevenue,
+    staffOrderList
 }

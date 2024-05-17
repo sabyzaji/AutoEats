@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import OrderCard from './components/OrderCard';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const DeliveredOrder = () => {
+    const location = useLocation();
+    const staffId = location.state.staffId;
+    console.log(staffId);
     const [reqOrderList, setReqOrderList] = useState([]);
     const navigate = useNavigate();
 
@@ -23,9 +26,10 @@ const DeliveredOrder = () => {
     return (
         <>
             <div className='flex justify-end  gap-9  pr-7  mt-10 font-semibold'>
-                <div className=' cursor-pointer ' onClick={() => navigate("/reqStaff")}>Requested Order</div>
-                <div className=' cursor-pointer ' onClick={() => navigate("/acpStaff")}>Accepted Order</div>
-                <div className=' cursor-pointer ' onClick={() => navigate("/delStaff")}>Delivered Order</div>
+                <div className='cursor-pointer' onClick={() => navigate('/staff-profile', { state: { staffId } })}>Profile</div>
+                <div className=' cursor-pointer ' onClick={() => navigate("/reqStaff", { state: { staffId } })}>Requested Order</div>
+                <div className=' cursor-pointer ' onClick={() => navigate("/acpStaff", { state: { staffId } })}>Accepted Order</div>
+                <div className=' cursor-pointer ' onClick={() => navigate("/delStaff", { state: { staffId } })}>Delivered Order</div>
                 <div className=' cursor-pointer' onClick={() => navigate('/')}>Logout</div>
             </div>
             <div className='font-bold text-3xl pl-14 pt-8'>Delivered Orders</div>
@@ -42,7 +46,7 @@ const DeliveredOrder = () => {
                 </div>
                 <div className="flex flex-wrap">
                     {reqOrderList.map((order, index) => (
-                        <OrderCard key={index} order={order} btn={"Completed"} />
+                        <OrderCard key={index} order={order} btn={"Completed"} staffid={staffId} />
                     ))}
                 </div>
             </div>

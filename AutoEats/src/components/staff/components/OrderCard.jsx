@@ -2,12 +2,13 @@ import React from 'react';
 import { Button } from 'antd';
 import axios from 'axios';
 
-const OrderCard = ({ order, btn }) => {
+const OrderCard = ({ order, btn, staffid }) => {
 
     const handleAcceptOrder = async () => {
         try {
             const requestData = JSON.stringify({
-                orderId: order.order._id
+                orderId: order.order._id,
+                staffID: staffid
             });
             const response = await axios.post(
                 `http://localhost:3500/staff/changeStatusToAcp`,
@@ -35,7 +36,8 @@ const OrderCard = ({ order, btn }) => {
     const handleDeliveredOrder = async () => {
         try {
             const requestData = JSON.stringify({
-                orderId: order.order._id
+                orderId: order.order._id,
+                staffID: staffid
             });
             const response = await axios.post(
                 `http://localhost:3500/staff/changeStatusToDel`,

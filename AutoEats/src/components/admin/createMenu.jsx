@@ -21,49 +21,61 @@ const CreateMenu = () => {
         preparationTime: null
     });
 
+    const handleImageUpload = async (e) => {
+        try {
+            const formData = new FormData();
+            formData.append('image', e.target.files[0]);
+
+            const response = await axios.post('http://localhost:3500/upload-image', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            if (response.status === 200) {
+                const imageUrl = response.data.imageUrl;
+                setFormValues({ ...formValues, imageURL: imageUrl });
+            } else {
+                console.error('Failed to upload image');
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    };
+
     const handleChange = (name, value) => {
         setFormValues({ ...formValues, [name]: value });
     };
 
     const handleSubmit = async (values) => {
-        console.log("clicked")
-        console.log(values);
         try {
-            const requestData = JSON.stringify({
+            const requestData = {
                 itemName: values.itemName,
                 description: values.description,
                 availability: values.availability,
                 category: values.category,
                 price: values.price,
                 ingredients: values.ingredients,
-                imageURL: values.imageURL,
+                imageURL: formValues.imageURL, // Using the stored image URL
                 preparationTime: values.preparationTime
+            };
+
+            const response = await axios.post('http://localhost:3500/admin/add-item', requestData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
             });
-            const response = await axios.post(
-                `http://localhost:3500/admin/add-item`,
-                requestData,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    withCredentials: true,
-                }
-            );
+
             if (response.status === 200) {
-                const responseData = response.data;
-
-                console.log(responseData);
-
-                console.log("sucess");
-                navigate('/menu-management')
-
+                console.log('Item added successfully');
+                navigate('/menu-management');
             } else {
-                throw new Error(CONSTANTS.RESPONSE_STATUS.FAILED);
+                console.error('Failed to add item');
             }
         } catch (error) {
-            console.log(error)
+            console.error('Error adding item:', error);
         }
-
     };
 
     return (
@@ -126,10 +138,12 @@ const CreateMenu = () => {
                         <Input.TextArea value={formValues.ingredients} onChange={(e) => handleChange('ingredients', e.target.value)} required />
                     </Form.Item>
                     <Form.Item
-                        label={<span style={{ fontWeight: 'bold' }}>Image URL</span>}
+                        label={<span style={{ fontWeight: 'bold' }}>Image </span>}
                         name="imageURL"
                     >
-                        <Input value={formValues.imageURL} onChange={(e) => handleChange('imageURL', e.target.value)} />
+                        <div className='flex'>
+                            <Input type='text' onChange={handleImageUpload} />
+                        </div>
                     </Form.Item>
                     <Form.Item
                         label={<span style={{ fontWeight: 'bold' }}>Preparation Time</span>}
@@ -146,8 +160,8 @@ const CreateMenu = () => {
                             Submit
                         </Button>
                     </Form.Item>
-                </Form>
-            </div>
+                </Form >
+            </div >
         </>
     );
 };

@@ -37,7 +37,7 @@ async function userLogin(req, res, next) {
         return res.send({ loggedUserId })
     } catch (err) {
         console.log(err);
-        next(httpErrors(401, 'Unauthorized : Login failed!'));
+        // next(httpErrors(401, 'Unauthorized : Login failed!'));
     }
 }
 

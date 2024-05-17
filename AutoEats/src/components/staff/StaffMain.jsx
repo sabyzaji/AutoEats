@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import OrderCard from './components/OrderCard';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const StaffMain = () => {
+    const location = useLocation();
+    const staffId = location.state.staffId;
+    console.log(staffId);
     const [reqOrderList, setReqOrderList] = useState([]);
     const navigate = useNavigate();
 
@@ -13,7 +16,7 @@ const StaffMain = () => {
                 const response = await axios.post('http://localhost:3500/staff/display');
                 const reqOrderListData = response.data;
                 setReqOrderList(reqOrderListData);
-                console.log(reqOrderListData);
+                // console.log(reqOrderListData);
             } catch (error) {
                 console.error('Error fetching food data:', error);
             }
@@ -23,12 +26,16 @@ const StaffMain = () => {
     }, []);
 
     const handleNavigation = (path) => {
-        navigate(path);
+        console.log(staffId)
+        navigate(path, { state: { staffId } });
     };
 
     return (
         <>
             <div className='flex justify-end gap-9 pr-7 mt-10 font-semibold'>
+                <div className='cursor-pointer' onClick={() => handleNavigation('/staff-profile')}>
+                    Profile
+                </div>
                 <div className='cursor-pointer' onClick={() => handleNavigation('/reqStaff')}>
                     Requested Order
                 </div>
@@ -56,7 +63,7 @@ const StaffMain = () => {
                 </div>
                 <div className='flex flex-wrap'>
                     {reqOrderList.map((order, index) => (
-                        <OrderCard key={index} order={order} btn={'Accept'} />
+                        <OrderCard key={index} order={order} btn={'Accept'} staffid={staffId} />
                     ))}
                 </div>
             </div>

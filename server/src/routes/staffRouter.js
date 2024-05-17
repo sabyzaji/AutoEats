@@ -9,8 +9,9 @@ staffRouter.post('/delOrders', staffController.getDeliveredOrdersList)//display 
 staffRouter.post('/changeStatusToAcp', staffController.updateOrderStatus);//change status to Dellivered
 staffRouter.post('/changeStatusToDel', staffController.updateOrderStatustoDel)//change status to delivred
 staffRouter.post('/reg-staff', staffController.staffRegistration);//registration of new staff
-staffRouter.post('/display-staff-profile', staffController.fetchStaffById);//display staff profile 
-
+staffRouter.post('/login-staff', staffController.loginStaff)
+staffRouter.post('/display-staff-profile', staffController.fetchStaffById);//display staff profile
+staffRouter.post('/display-all-staff', staffController.getAllStaff)
 
 module.exports = staffRouter
 

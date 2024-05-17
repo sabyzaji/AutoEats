@@ -1,4 +1,4 @@
-const { getOrdersWithItems, createNewEmP, staffDetailsIdPassed } = require('../services/staffServices');
+const { getOrdersWithItems, createNewEmP, staffDetailsIdPassed, userLogin, getStaffs } = require('../services/staffServices');
 const { updateOrderStatusToCooking } = require("../services/staffServices")
 const { getAcptOrdersWithItems } = require("../services/staffServices")
 const { getDeliveredOrdersWithItems } = require("../services/staffServices")
@@ -50,8 +50,10 @@ const getDeliveredOrdersList = async (req, res) => {
 const updateOrderStatus = async (req, res) => {
 
     const { orderId } = req.body;
+    const { staffID } = req.body;
+    const bothID = { orderId, staffID }
     try {
-        const message = await updateOrderStatusToCooking(orderId);
+        const message = await updateOrderStatusToCooking(bothID);
         res.status(200).json({ message });
     } catch (error) {
         console.error("Error updating order status:", error);
@@ -103,6 +105,32 @@ async function fetchStaffById(req, res) {
     }
 }
 
+async function loginStaff(req, res, next) {
+    try {
+        const { phoneNumber, password } = req.body
+        const loggedUserId = await userLogin(phoneNumber, password);
+        console.log(loggedUserId)
+
+        return res.send({ loggedUserId })
+    } catch (err) {
+        console.log(err);
+        // next(httpErrors(401, 'Unauthorized : Login failed!'));
+    }
+}
+
+async function getAllStaff(req, res, next) {
+    try {
+        const empList = await getStaffs();
+        console.log(empList)
+        return res.send({ empList });
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+
 module.exports = {
     getAllOrdersWithItems,
     updateOrderStatus,
@@ -110,6 +138,8 @@ module.exports = {
     getDeliveredOrdersList,
     updateOrderStatustoDel,
     staffRegistration,
-    fetchStaffById
+    fetchStaffById,
+    loginStaff,
+    getAllStaff
 
 };

@@ -83,26 +83,28 @@ const getDeliveredOrdersWithItems = async () => {
     }
 
 }
-
-
-const updateOrderStatusToCooking = async (orderId) => {
+const updateOrderStatusToCooking = async (bothID) => {
+    const orderId = bothID.orderId;
+    const staffID = bothID.staffID;
 
     try {
         const order = await OrderModel.findOne({ _id: orderId });
+        const staff = await StaffModel.findOne({ _id: staffID });
 
-        if (order) {
+        if (order && staff) {
             order.orderStatus = "cooking";
+            staff.no_of_orders_taken = (staff.no_of_orders_taken || 0) + 1; // Incrementing the number of orders taken
             await order.save();
+            await staff.save();
             return "Order status updated to cooking successfully";
         } else {
-            throw new Error("Order not found");
+            throw new Error("Order or staff not found");
         }
     } catch (error) {
         console.error("Error updating order status to cooking:", error);
         throw new Error(`Error updating order status to cooking: ${error.message}`);
     }
 };
-
 
 const updateOrderStatusToDelivered = async (orderId) => {
 
@@ -162,6 +164,36 @@ async function staffDetailsIdPassed(staffID) {
     }
 }
 
+
+
+async function userLogin(phoneNumber, password) {
+    try {
+        const user = await StaffModel.findOne({ phoneNumber: phoneNumber })
+        // console.log(phoneNumber)
+        if (!user) {
+            throw new Error("User not found!!..");
+        }
+        const isVerified = await bcrypt.compare(password, user.password)
+        // console.log(password);
+        if (!isVerified) {
+            throw new Error("Failed to Authenticate");
+        }
+        return user._id
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
+async function getStaffs() {
+    try {
+        const staff = await StaffModel.find({});
+        return staff;
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
 module.exports = {
     getOrdersWithItems,
     updateOrderStatusToCooking,
@@ -169,5 +201,7 @@ module.exports = {
     getDeliveredOrdersWithItems,
     updateOrderStatusToDelivered,
     createNewEmP,
-    staffDetailsIdPassed
+    staffDetailsIdPassed,
+    userLogin,
+    getStaffs
 };

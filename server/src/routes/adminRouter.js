@@ -11,6 +11,7 @@ adminRouter.post('/customer-detail-by-id', adminController.fetchCustomersById);
 adminRouter.post('/order-display', adminController.getOrdersListToDisplay);
 adminRouter.post('/table-count', adminController.countTablesUsedFrequently);
 adminRouter.post('/daily-order-revenue', adminController.getDailyOrdersAndRevenue);
+adminRouter.post('/staff-orders-list', adminController.staffOrderList);
 
 
 
